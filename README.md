@@ -3,7 +3,6 @@ The dashboard allows stakeholders to input shipment details via a sidebar and im
 
 Here is a professional `README.md` file for your **Logistics & Supply Chain** project. You can create a new file named `README.md` in your project folder and paste this content directly into it.
 
-```markdown
 # 🚚 Supply Chain: Delivery Delay Prediction System
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
@@ -18,10 +17,10 @@ This project is an end-to-end Machine Learning application designed to optimize 
 
 ## ✨ Features
 
-* **🤖 Live Prediction Tool:** Interactive sidebar for stakeholders to input route details (Origin, Destination, Mode) and get instant delay predictions.
-* **📊 Analytics Dashboard:** Visualizes historical performance, including average delays by shipping mode and regional bottlenecks.
-* **⚠️ Risk Assessment:** Automatically categorizes shipments as "Safe," "Minor Risk," or "High Risk" based on predicted delay duration.
-* **🌍 Real-World Data:** Built using the **DataCo Smart Supply Chain** dataset to model realistic logistics scenarios.
+* 🤖 Live Prediction Tool: Interactive sidebar for stakeholders to input route details (Origin, Destination, Mode) and get instant delay predictions.
+* 📊 Analytics Dashboard: Visualizes historical performance, including average delays by shipping mode and regional bottlenecks.
+* ⚠️ Risk Assessment: Automatically categorizes shipments as "Safe," "Minor Risk," or "High Risk" based on predicted delay duration.
+* 🌍 Real-World Data: Built using the **DataCo Smart Supply Chain** dataset to model realistic logistics scenarios.
 
 ## 🛠️ Tech Stack
 
