@@ -1,22 +1,32 @@
+from pathlib import Path
+
 import streamlit as st
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
 import plotly.express as px
 
+st.set_page_config(page_title="Logistics AI Dashboard", layout="wide")
+
+DATA_PATHS = [
+    Path("DataCoSupplyChainDataset.csv"),
+    Path("compressed_data.csv.gz"),
+]
+DATASET_HINT = " or ".join(path.name for path in DATA_PATHS)
+
 @st.cache_data
-def load_data():
+def load_data() -> pd.DataFrame:
     try:
-        
-        df = pd.read_csv('DataCoSupplyChainDataset.csv', encoding='latin-1')
-        
-       
+        dataset_path = next((path for path in DATA_PATHS if path.exists()), None)
+        if dataset_path is None:
+            raise FileNotFoundError
+
+        df = pd.read_csv(dataset_path, encoding="latin-1")
+
         df['Delay_Duration'] = df['Days for shipping (real)'] - df['Days for shipment (scheduled)']
-        
-        
+
         cols_to_keep = {
             'Shipping Mode': 'Shipping_Mode',
             'Order City': 'Destination',
@@ -24,16 +34,16 @@ def load_data():
             'Order Region': 'Region',
             'Delay_Duration': 'Delay_Duration'
         }
-        
+
         existing_cols = [c for c in cols_to_keep.keys() if c in df.columns]
         df = df[existing_cols].rename(columns=cols_to_keep)
-        
+
         df = df.dropna()
-        
+
         return df
-        
+
     except FileNotFoundError:
-        st.error("CRITICAL ERROR: 'DataCoSupplyChainDataset.csv' not found.")
+        st.error(f"CRITICAL ERROR: Dataset not found. Expected {DATASET_HINT}.")
         st.info("Please download the dataset from Kaggle and place it in the same folder as app.py")
         st.stop()
     except Exception as e:
@@ -41,36 +51,39 @@ def load_data():
         st.stop()
 
 df = load_data()
-
-
-st.set_page_config(page_title="Logistics AI Dashboard", layout="wide")
 st.title("🚚 Real-World Supply Chain: Delay Prediction")
 st.markdown("A Machine Learning dashboard predicting shipping delays using the **DataCo Smart Supply Chain** dataset.")
 
 
 
-le_origin = LabelEncoder()
-le_dest = LabelEncoder()
-le_mode = LabelEncoder()
+@st.cache_resource
+def train_model(dataframe: pd.DataFrame):
+    le_origin = LabelEncoder()
+    le_dest = LabelEncoder()
+    le_mode = LabelEncoder()
 
-df['Origin_Code'] = le_origin.fit_transform(df['Origin'])
-df['Dest_Code'] = le_dest.fit_transform(df['Destination'])
-df['Mode_Code'] = le_mode.fit_transform(df['Shipping_Mode'])
+    dataframe = dataframe.copy()
+    dataframe['Origin_Code'] = le_origin.fit_transform(dataframe['Origin'])
+    dataframe['Dest_Code'] = le_dest.fit_transform(dataframe['Destination'])
+    dataframe['Mode_Code'] = le_mode.fit_transform(dataframe['Shipping_Mode'])
 
-# Features (X) and Target (y)
-X = df[['Origin_Code', 'Dest_Code', 'Mode_Code']]
-y = df['Delay_Duration']
+    X = dataframe[['Origin_Code', 'Dest_Code', 'Mode_Code']]
+    y = dataframe['Delay_Duration']
 
-# Train/Test Split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
-# Model Training
-model = RandomForestRegressor(n_estimators=50, random_state=42)
-model.fit(X_train, y_train)
+    model = RandomForestRegressor(n_estimators=50, random_state=42)
+    model.fit(X_train, y_train)
 
-# Metrics
-preds = model.predict(X_test)
-mae = mean_absolute_error(y_test, preds)
+    preds = model.predict(X_test)
+    mae = mean_absolute_error(y_test, preds)
+
+    return model, le_origin, le_dest, le_mode, mae
+
+
+model, le_origin, le_dest, le_mode, mae = train_model(df)
 
 
 
