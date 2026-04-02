@@ -3,26 +3,26 @@ The dashboard allows stakeholders to input shipment details via a sidebar and im
 
 Here is a professional `README.md` file for your **Logistics & Supply Chain** project. You can create a new file named `README.md` in your project folder and paste this content directly into it.
 
-# 🚚 Supply Chain: Delivery Delay Prediction System
+#  Supply Chain: Delivery Delay Prediction System
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28-red)
 ![Scikit-Learn](https://img.shields.io/badge/ML-RandomForest-orange)
 
-## 📄 Overview
+##  Overview
 
 This project is an end-to-end Machine Learning application designed to optimize logistics operations. It utilizes historical supply chain data to predict the likelihood and duration of shipping delays.
 
 **The dashboard allows stakeholders to input shipment details via a sidebar and immediately receive a risk assessment score and estimated delay duration in the main view, enabling proactive decision-making.**
 
-## ✨ Features
+##  Features
 
-* 🤖 Live Prediction Tool: Interactive sidebar for stakeholders to input route details (Origin, Destination, Mode) and get instant delay predictions.
-* 📊 Analytics Dashboard: Visualizes historical performance, including average delays by shipping mode and regional bottlenecks.
-* ⚠️ Risk Assessment: Automatically categorizes shipments as "Safe," "Minor Risk," or "High Risk" based on predicted delay duration.
-* 🌍 Real-World Data: Built using the **DataCo Smart Supply Chain** dataset to model realistic logistics scenarios.
+*  Live Prediction Tool: Interactive sidebar for stakeholders to input route details (Origin, Destination, Mode) and get instant delay predictions.
+*  Analytics Dashboard: Visualizes historical performance, including average delays by shipping mode and regional bottlenecks.
+*  Risk Assessment: Automatically categorizes shipments as "Safe," "Minor Risk," or "High Risk" based on predicted delay duration.
+*  Real-World Data: Built using the **DataCo Smart Supply Chain** dataset to model realistic logistics scenarios.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Language:** Python
 * **Web Framework:** Streamlit
@@ -30,7 +30,7 @@ This project is an end-to-end Machine Learning application designed to optimize 
 * **Data Manipulation:** Pandas, NumPy
 * **Visualization:** Plotly Express
 
-## 🚀 How to Run Locally
+##  How to Run Locally
 
 ### 1. Prerequisites
 Ensure you have Python installed. It is recommended to use a virtual environment.
@@ -59,7 +59,7 @@ streamlit run app.py
 
 ```
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 ├── app.py                       # Main application script (ETL, Modeling, Dashboard)
@@ -69,7 +69,7 @@ streamlit run app.py
 
 ```
 
-## 🧠 Model Logic
+##  Model Logic
 
 The application uses a **Random Forest Regressor** to predict the `Delay_Duration` target variable.
 
@@ -77,7 +77,7 @@ The application uses a **Random Forest Regressor** to predict the `Delay_Duratio
 * **Features Used:** Origin City, Destination City, and Shipping Mode.
 * **Encoding:** Label Encoding is used to convert categorical city names into numerical format for the model.
 
-## 📬 Contact
+##  Contact
 
 Created by **Hitesh Kanagala Rajendra Prasad**.
 
